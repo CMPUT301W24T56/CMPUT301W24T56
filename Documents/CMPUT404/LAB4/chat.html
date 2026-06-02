@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock, Timer, Stopwatch, Countdown App</title>
+    <style>
+        body {
+            background-color: antiquewhite;
+            background-image: linear-gradient(to bottom right, antiquewhite, lightblue);
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px;
+        }
+        .section {
+            background-color: darkgray;
+            width: 45%;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        "use strict"; 
+
+        class Ticker {
+            constructor() {
+                if (Ticker.instance) {
+                    throw new Error("Cannot instantiate multiple Ticker instances.");
+                }
+                Ticker.instance = this;
+                this.observers = [];
+                this.startTick();
+            }
+
+            static getInstance() {
+                if (!Ticker.instance) {
+                    new Ticker();
+                }
+                return Ticker.instance;
+            }
+
+            addObserver(observer) {
+                this.observers.push(observer);
+            }
+
+            notify() {
+                this.observers.forEach(observer => observer.update());
+            }
+
+            startTick() {
+                const tick = () => {
+                    this.notify();
+                    setTimeout(tick, 1000);
+                };
+                tick();
+            }
+        }
+
+        class Clock {
+            constructor(element) {
+                this.element = element;
+                Ticker.getInstance().addObserver(this);
+                this.update(); // Initial call
+            }
+
+            update() {
+                const now = new Date();
+                this.element.textContent = now.toLocaleTimeString();
+            }
+        }
+
+        class Timer {
+            constructor(element) {
+                this.element = element;
+                this.minutesInput = document.getElementById('timer-minutes');
+                this.secondsInput = document.getElementById('timer-seconds');
+                this.checkbox = document.getElementById('timer-checkbox');
+                this.remainingTime = 0;
+                this.interval = null;
+
+                Ticker.getInstance().addObserver(this);
+                this.checkbox.addEventListener('change', () => this.toggle());
+            }
+
+            toggle() {
+                if (this.checkbox.checked) {
+                    this.start();
+                } else {
+                    this.stop();
+                }
+            }
+
+            start() {
+                this.remainingTime = this.minutesInput.value * 60 + parseInt(this.secondsInput.value);
+                this.disableInputs(true);
+                this.updateTimer();
+            }
+
+            stop() {
+                clearInterval(this.interval);
+                this.element.textContent = "Timer stopped";
+                this.disableInputs(false);
+            }
+
+            updateTimer() {
+                this.interval = setInterval(() => {
+                    if (this.remainingTime <= 0) {
+                        clearInterval(this.interval);
+                        this.element.textContent = "Time's Up!";
+                        this.disableInputs(false);
+                    } else {
+                        this.remainingTime--;
+                        const minutes = Math.floor(this.remainingTime / 60);
+                        const seconds = this.remainingTime % 60;
+                        this.element.textContent = `${minutes} minutes ${seconds} seconds remaining`;
+                    }
+                }, 1000);
+            }
+
+            disableInputs(disable) {
+                this.minutesInput.disabled = disable;
+                this.secondsInput.disabled = disable;
+            }
+        }
+
+        class Stopwatch {
+            constructor(element) {
+                this.element = element;
+                this.startButton = document.getElementById('stopwatch-start');
+                this.stopButton = document.getElementById('stopwatch-stop');
+                this.resetButton = document.getElementById('stopwatch-reset');
+                this.elapsedTime = 0;
+                this.interval = null;
+
+                Ticker.getInstance().addObserver(this);
+                this.startButton.addEventListener('click', () => this.start());
+                this.stopButton.addEventListener('click', () => this.stop());
+                this.resetButton.addEventListener('click', () => this.reset());
+            }
+
+            start() {
+                this.stopButton.disabled = false;
+                this.startButton.disabled = true;
+                this.interval = setInterval(() => {
+                    this.elapsedTime += 0.1; // Increment by 100ms
+                    this.update();
+                }, 100);
+            }
+
+            stop() {
+                clearInterval(this.interval);
+                this.stopButton.disabled = true;
+                this.startButton.disabled = false;
+            }
+
+            reset() {
+                this.stop();
+                this.elapsedTime = 0;
+                this.update();
+            }
+
+            update() {
+                const hours = Math.floor(this.elapsedTime / 3600);
+                const minutes = Math.floor((this.elapsedTime % 3600) / 60);
+                const seconds = Math.floor(this.elapsedTime % 60);
+                const milliseconds = Math.floor((this.elapsedTime % 1) * 100);
+                this.element.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(2, '0')}`;
+            }
+        }
+
+        class Countdown {
+            constructor(element) {
+                this.element = element;
+                this.dateInput = document.getElementById('countdown-date');
+                this.timeInput = document.getElementById('countdown-time');
+                this.message = document.getElementById('countdown-message');
+
+                Ticker.getInstance().addObserver(this);
+            }
+
+            update() {
+                const targetDate = new Date(this.dateInput.value + 'T' + this.timeInput.value);
+                const now = new Date();
+                const timeDiff = targetDate - now;
+
+                if (timeDiff <= 0) {
+                    this.message.classList.remove('hidden');
+                    this.element.textContent = "Countdown finished!";
+                } else {
+                    const years = new Date(timeDiff).getUTCFullYear() - 1970;
+                    const months = new Date(timeDiff).getUTCMonth();
+                    const days = new Date(timeDiff).getUTCDate() - 1;
+                    const hours = new Date(timeDiff).getUTCHours();
+                    const minutes = new Date(timeDiff).getUTCMinutes();
+                    const seconds = new Date(timeDiff).getUTCSeconds();
+                    this.element.textContent = `${years} years ${months} months ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds remaining`;
+                }
+            }
+        }
+
+        function main() {
+            const clockElement = document.getElementById('clock-display');
+            const timerElement = document.getElementById('timer-display');
+            const stopwatchElement = document.getElementById('stopwatch-display');
+            const countdownElement = document.getElementById('countdown-display');
+
+            new Clock(clockElement);
+            new Timer(timerElement);
+            new Stopwatch(stopwatchElement);
+            // new Countdown(countdownElement);
+        }
+
+        window.addEventListener('load', main);
+    </script>
+</head>
+<body>
+    <section class="container">
+        <section class="section" id="clock">
+            <h3>Clock</h3>
+            <p id="clock-display">00:00:00</p>
+        </section>
+        <section class="section" id="stopwatch">
+            <h3>Stopwatch</h3>
+            <p id="stopwatch-display">00:00:00.00</p>
+            <button id="stopwatch-start">Start</button>
+            <button id="stopwatch-stop" disabled>Stop</button>
+            <button id="stopwatch-reset">Reset</button>
+        </section>
+    </section>
+    <section class="container">
+        <section class="section" id="timer">
+            <h3>Timer</h3>
+            <p id="timer-display">Enter time and start!</p>
+            <input type="number" id="timer-minutes" placeholder="Minutes" min="0">
+            <input type="number" id="timer-seconds" placeholder="Seconds" min="0">
+            <label><input type="checkbox" id="timer-checkbox"> Start Timer</label>
+        </section>
+        <section class="section" id="countdown">
+            <h3>Countdown</h3>
+            <p id="countdown-display">Set a date and time!</p>
+            <input type="datetime-local" id="countdown-datetime">
+            <p id="countdown-message" class="hidden">Countdown finished!</p>
+        </section>
+    </section>
+</body>
+</html>

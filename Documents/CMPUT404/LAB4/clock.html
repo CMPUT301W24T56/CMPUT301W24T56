@@ -1,0 +1,383 @@
+<!-- references-> https://www.w3schools.com/js/js_strict.asp for understanding the working of use strict. -->
+<!-- reference -> https://www.geeksforgeeks.org/singleton-design-pattern/ for understanding singleton pattern and the initialization of singleton class -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <!-- all the styling of the clock..html page lies in the style tag since we are not allowed to use the inline styling. 
+         the style tag deals with the spacing padding background and other design things the clock.html-->
+        <style>
+            body{
+                background-color: antiquewhite;
+                background-image: linear-gradient(to bottom right, antiquewhite, lightblue);
+            }
+            .container {
+                display: flex; /* Use Flexbox for alignment */
+                justify-content: space-around; /* Space columns evenly */
+                margin: 50px;
+                padding: 50px;
+            }
+            .section {
+                background-color: darkgray; /* Background for visual clarity */
+                flex: 0 0 45%; /* Each column takes up about 45% of the container width */
+                padding: 20px; /* Add some padding */
+                text-align: center; /* Center text inside columns */
+                border-radius: 5px; /* Optional: round the corners */
+                color: darkblue;
+            }
+            .hidden{
+                visibility: hidden;
+            }
+        </style>
+        <!-- as specified in the lab we need to define all the javascript code inside the head. 
+         the script tag contains all the javscript which is dealing with the stop watch , timer, clock and countdown features 
+         of our clock web app. we  handle all the activities at the same time simultaneously such that working of one part does not affect 
+         the working of other.  -->
+         <!-- reference -> https://www.geeksforgeeks.org/observer-pattern-set-1-introduction/
+         the following source was used to understand the observer pattern. how they work and how they should be implemented  -->
+         <script>
+            "use strict"; 
+            /*
+            the following ticker class follows singleton pattern and  and observer pattern and handles the ticking. after each ticking they observers should be notified that
+            a tick has been passed and they should update the  values. 
+            
+            */
+            class Ticker {
+                static instance = null;
+                observers = [];
+    
+                constructor() {}
+    
+                static getInstance() {
+                    if (this.instance === null) {
+                        this.instance = new Ticker();
+                        this.instance.tick();
+                    }
+                    return this.instance;
+                }
+                // this function notifies all the observers that a tick has been done and its time for updating the values. 
+                notify() {
+                    for (let i = 0; i < this.observers.length; i++) {
+                        this.observers[i].update(); // Notify all observers
+                    }
+                }
+                
+                addObserver(observer) {
+                    // Adds the observer 
+                    this.observers.push(observer); 
+                }
+                // the tick function is called after each second which then notifies all its observers by calling notify method. 
+                tick() {
+                    this.notify(); 
+                    // this is a recursive call to tick after each second. 
+                    setTimeout(()=>this.tick(), 1000); // Use an arrow function to maintain context
+                }
+            }
+            /* 
+            the below class handles the current time which is being displayed on the screen.
+            */
+            class Clock {
+                // The constructor runs when we create a new Clock object.
+                constructor(element) {
+                    this.element = element; // Assign the clock element
+                    Ticker.getInstance().addObserver(this);
+                    this.update();
+                }
+                // This method updates the displayed time and is called after each tick to update and show the current time. 
+                update() {
+                    const now = new Date();
+                    // reference -> https://www.w3schools.com/jsref/jsref_tolocalestring.asp  converting time to string format.
+                    this.element.textContent = now.toLocaleTimeString(); // Update the clock time
+                }
+            }
+            /* 
+            the following class handles the code for stop watch 
+            when clicked on start button it disables the  start button and starts the watch when we click on stop it stops the watch at that 
+            particular point and when click start again it starts the stop watch from the same point where it left. we can restart the stop watch 
+            by selecting reset option. 
+            */
+            class StopWatch {
+                constructor(element) {
+                    this.element = element; // Assign the clock element
+                    this.in_between = false;
+                    Ticker.getInstance().addObserver(this);
+                    // we need the var to keep track of the time elapsed. for stop watch. 
+                    this.stop = true; // when we have to stop the watch we need something to maintain the state and
+                    // start from the same point where we left. 
+                    // to count time we need a var
+                    this.count_time = 0;
+                    this.stop_time = 0;
+                    this.interval = 0;
+                    const start_button = document.getElementById("start_stop_watch");
+                    const stop_button = document.getElementById("stop");
+                    const reset_button = document.getElementById("reset");
+                    start_button.addEventListener("click", () => this.start_watch());  // calls the cstart_watch function when start button is clicked 
+                    stop_button.addEventListener("click", () => this.stop_watch());  // calls the stop_watch  function when stop button is clicked 
+                    reset_button.addEventListener("click", () => this.reset());  // reset function is called upon click and resets the clock to 0.
+                    this.update();
+                }
+            
+                update() {
+                    if (this.stop != true) {
+                        // incremeent the time by miliseconds 
+                        this.time_count = Date.now() - this.begin - this.interval; // Adjusted time_count to account for pause duration
+                        const text = this.formatTime(this.time_count);
+                        document.getElementById("time_record").innerHTML = text;
+                    }
+                }
+            
+                // The following function formatTime and pad was generated from chatgpt, openAi,  on oct 13 2024. for find inf out how to get the time in months, years and hours format.
+                // by providing the following input. how to format time in the provided format ( format provided ) when I have the time elasped in milliseconds. 
+                // the below function just converts the time in a specified format asked above. 
+                formatTime(time) {
+                    console.log("inside format time");
+                    // Convert time in milliseconds to h:mm:ss.sss format
+                    const milliseconds = Math.floor((time % 1000) / 10);
+                    const seconds = Math.floor((time / 1000) % 60);
+                    const minutes = Math.floor((time / (1000 * 60)) % 60);
+                    const hours = Math.floor((time / (1000 * 60 * 60)) % 24);
+            
+                    return `${hours}:${this.pad(minutes)}:${this.pad(seconds)}.${this.pad(milliseconds, 3)}`;
+                }
+            
+                pad(number, size = 2) {
+                    let s = "0" + number;
+                    return s.substr(s.length - size);
+                }
+            
+                start_watch() {
+                    // we need to disable the start button and have to start the counter. 
+                    // reference for changing visibility of button https://www.w3schools.com/jsref/prop_style_visibility.asp
+                    document.getElementById("start_stop_watch").disabled = true;
+                    document.getElementById("stop").disabled = false;
+            
+                    if (!this.in_between) {
+                        this.begin = Date.now();
+                        this.in_between = true;
+                        this.stop = false;
+                        return;
+                    }
+            
+                    this.interval += Date.now() - this.stop_time; // Properly calculate interval after stopping
+                    this.stop = false;
+                }
+                /*
+                the following function stops the 
+                */
+            
+                stop_watch() {
+                    // have to stop ticking..
+                    document.getElementById("start_stop_watch").disabled = false;
+                    document.getElementById("stop").disabled = true;
+                    this.stop = true;
+                    this.stop_time = Date.now(); // Record the time when it stopped
+                }
+                /* 
+                the reset function brings the stop watch to the beginnning point where it shows time in similar  format like this  0:00:00.  
+                */
+                reset() {
+                    document.getElementById("stop").disabled = false;
+                    document.getElementById("start_stop_watch").disabled = false;
+            
+                    this.time_count = 0;
+                    this.interval = 0; // Reset interval for reset functionality
+                    document.getElementById("time_record").textContent = "00:00:00:000";
+                    this.stop = true;
+                    this.in_between = false;
+                }
+            }
+            /*
+             .it just takes input as minutes and seconds for the timer and when start. i
+
+             
+             */
+            class Timer {
+                constructor(element) {
+                    this.first_timer = false;
+                    console.log("created constructor");
+                    this.element = element;
+                    this.start_time = 0;
+                    this.timer  = false;
+                    Ticker.getInstance().addObserver(this);
+                    this.start_timer = document.getElementById("start_timer");
+                    this.start_timer.addEventListener("click",()=> this.start());  // start the timer 
+                    
+                }
+                /*
+                the update is being called by the ticker notify function after each tick which results in decreasig the count of timer by one second 
+                we are storing time in seconds and after each second it gets decremented by 1 . if the checkbox is not checked then thetimer stops. 
+                when the timers up it shows time's up message.
+
+                if the checkbox is un checked after starting the timer it will stop the timer and the person has to start the timer frmo begining. 
+
+                */
+                update() {
+                    console.log("start time greater than one " + this.start_time );
+                    if (this.start_time > 0 && this.timer == true) {
+                        document.getElementById("minutes").disabled = true;
+                        document.getElementById("seconds").disabled = true;
+                        const minutes = Math.floor(this.start_time / 60); 
+                        const seconds = this.start_time % 60;             
+                        // updating the text content of the timer paragraph.
+                        this.element.textContent = `${minutes} minutes and ${seconds} seconds remaining`;
+                        // Decrease time by one second
+                        this.start_time -= 1;
+                    }
+
+                    else if (this.timer == false && this.start_time > 0) {
+                        document.getElementById("minutes").disabled = false;
+                        document.getElementById("seconds").disabled = false;
+                        // stop timer
+                        this.element.textContent = "Timer Stopped";
+                    }
+                    else  {
+                        this.timer = false;
+                        if (this.first_timer == true){
+                            this.element.textContent = "Time's Up!";
+                            
+                        }
+                        
+                        document.getElementById("minutes").disabled = false;
+                        document.getElementById("seconds").disabled = false;
+                        // stop timer
+                        
+                    }
+                    
+                }
+                /*  
+                the start function verifies whether input provided is an integer or nor. 
+                */
+                start(){
+                    if ( this.start_timer.checked && this.timer == false) {
+                    // Get the minutes and seconds from the input fields and validate them
+                    const minutes = parseInt(document.getElementById("minutes").value); // Use `.value`
+                    const seconds = parseInt(document.getElementById("seconds").value); // Use `.value`
+                    // Validate minutes and seconds
+                    if (!isNaN(minutes) && !isNaN(seconds) && (minutes > 0 || seconds > 0)) {
+                        this.start_time = minutes * 60 + seconds; // Convert to total seconds
+                        // Clear the input fields after starting the timer
+                        document.getElementById("minutes").value = "";
+                        document.getElementById("seconds").value = "";
+                        console.log(this.start_time);
+                        this.timer = true;
+                        this.first_timer = true;
+                        this.update;
+                    }
+                }
+                else if (this.timer == true && this.start_timer.checked == false) {
+                    this.timer = false;
+                    // stop the timer 
+                    // save the time; 
+                    }
+                else if (this.timer == true && this.start_timer.checked == true){
+                    // start timer from that point 
+                    this.timer = true;
+                }
+            }
+            
+        }
+        /*
+        the countdown class is similar to the timer class when we provide the date and time 
+        it starts the countdown and shows how much time is left for that following day and time. 
+        it shows the time in more familiar way by showing how many months , days, hours, minutes and seconds left. 
+        the update method of the class is called by the ticker notify part after each tick and updates the countdown 
+
+        */
+        class CountDown{
+            constructor(element) {
+                this.first_timer = false;
+                console.log("created constructor");
+                this.element = element;
+                this.start_time = 0;
+                this.timer  = false;
+                Ticker.getInstance().addObserver(this);
+                this.start_timer = document.getElementById("submit");
+                this.start_timer.addEventListener("click",()=> this.start());  // start the timer 
+                
+            }
+            update (){
+                if (this.timer){
+                    console.log("inside update");
+                    this.countdown_left = this.datetime_selected - Date.now();
+                    console.log(this.countdown_left);
+                    if (this.countdown_left <= 0) {
+                        document.getElementById("countdown-message").style.visibility = "visible";
+
+                        document.getElementById("countdown").innerHTML = 'This is countDown';
+                        return 0 ;
+                    } 
+                    // the following years , moonths and next 6 lines were generated by chatgpt open ai on oct 13 2027. 
+                    const years = new Date(this.countdown_left).getUTCFullYear() - 1970;
+                    const months = new Date(this.countdown_left).getUTCMonth();
+                    const days = new Date(this.countdown_left).getUTCDate() - 1;
+                    const hours = new Date(this.countdown_left).getUTCHours();
+                    const minutes = new Date(this.countdown_left).getUTCMinutes();
+                    const seconds = new Date(this.countdown_left).getUTCSeconds();
+                    document.getElementById("countdown").innerHTML = `${years} years ${months} months ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds remaining`;
+                }
+            }    
+            start(){
+                console.log("inside start of the countdown");
+                document.getElementById("countdown-message").style.visibility = "hidden";
+
+                this.datetime_selected = new Date(document.getElementById("countdown-datetime").value); // we will get the selected date.
+                this.timer = true;
+                this.update;
+                
+            }
+        } 
+        function main() {
+                // reference from chat open AI -> used to understand which parameters should go inside the clock class.
+                const clockElement = document.getElementById('clock_time');
+                new Clock(clockElement);
+                const stopelement = document.getElementById('time_record');
+                new StopWatch(stopelement);
+                const timer_element = document.getElementById('timer_element');
+                new Timer(timer_element);
+                const count_down = document.getElementById('countdown-datetime');
+                new CountDown(count_down);
+            }
+            
+            window.addEventListener('load', main);
+        </script>
+        <title>JS LAB</title>
+    </head>
+    <body>
+        <!-- as specified in the lab we need to create semantic HTML for four parts of the app: clock, timer, stopwatch, and countdown.
+        which means we have to create seperate sections which deals with each feature so that we can keep the code clean.
+        it gets easier to read.  -->
+        <section class = "container">
+            <h2>JS Lab</h2>
+            <section  class = "section" id = "clock">
+                <h2>Clock.</h2> 
+                <p id = "clock_time"> This is the clock. </p>
+            </section>
+            <section  class = "section" id = "stop_watch">
+                <h2>Stop Watch. </h2>
+                <p> This is the stop watch. </p>
+                <p id = "time_record"> 00:00:00:000</p>
+                <button id = "start_stop_watch">Start</button>
+                <button id = "stop">Stop</button>
+                <button id = "reset">Reset</button>
+            </section>
+        </section>
+        <section class = "container">
+            <h2>JS LAB</h2> 
+            <section class = "section">
+                <h2>CountDown.</h2> 
+                <p id = "countdown"> This is the CountDown. </p>
+                <input type="datetime-local" id="countdown-datetime">
+                <p id="countdown-message" class="hidden">Countdown finished!</p>
+                <button type = "submit" id = "submit">submit</button>
+            </section>
+            <section class = "section" id = "timer">
+                <h2>Timer. </h2>
+                <p id  = "timer_element"> This is the Timer. </p>
+                <input type = "number" id = "minutes">
+                <input type = "number"  id = "seconds">
+                <input type = "checkbox" id = "start_timer"> start_timer
+            </section>
+        </section>    
+    </body>
+</html>

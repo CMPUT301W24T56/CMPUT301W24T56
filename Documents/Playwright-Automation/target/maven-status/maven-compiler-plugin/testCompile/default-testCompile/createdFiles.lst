@@ -1,0 +1,7 @@
+orangehrm/pages/LoginPage.class
+orangehrm/base/BaseTestClass.class
+orangehrm/pages/BuzzPage.class
+orangehrm/tests/OrangeHrmTest.class
+orangehrm/pages/LeavePage.class
+orangehrm/pages/DashboardPage.class
+orangehrm/pages/SideBarPage.class

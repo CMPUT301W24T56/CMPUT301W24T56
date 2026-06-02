@@ -1,0 +1,10 @@
+animal_baby_names = {"hippo": "calf", "horse": "foal", "dog": "pup", "kangaroo": "joey", "monkey": "infant", "owl": "owlet", "parrot": "chick", "rabbit": "bunny", "rat": "pup", "cow": "calf", "skunk": "kit", "sheep": "lamb"}
+
+user_selection = input("Find the baby name of any animal! (not rlly). Choose an animal: ")
+modified_selection = user_selection.lower()
+return_value = animal_baby_names.get(modified_selection)
+
+if modified_selection not in animal_baby_names:
+    print("The animal is not on the list")
+else:
+    print("The baby of " + user_selection + " is a(n) " + return_value )

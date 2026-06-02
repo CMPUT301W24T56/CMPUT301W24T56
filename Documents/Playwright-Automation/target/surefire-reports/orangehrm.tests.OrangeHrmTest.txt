@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: orangehrm.tests.OrangeHrmTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 25.28 s -- in orangehrm.tests.OrangeHrmTest
