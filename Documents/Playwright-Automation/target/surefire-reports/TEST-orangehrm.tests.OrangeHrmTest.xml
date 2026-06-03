@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="orangehrm.tests.OrangeHrmTest" time="41.282" tests="1" errors="1" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="orangehrm.tests.OrangeHrmTest" time="22.631" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -13,7 +13,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="CA"/>
     <property name="sun.boot.library.path" value="/Users/arsharora/Library/Application Support/Code/User/globalStorage/pleiades.java-extension-pack-jdk/java/21/lib"/>
-    <property name="sun.java.command" value="/Users/arsharora/Documents/Playwright-Automation/target/surefire/surefirebooter-20260602225259780_3.jar /Users/arsharora/Documents/Playwright-Automation/target/surefire 2026-06-02T22-52-59_723-jvmRun1 surefire-20260602225259780_1tmp surefire_0-20260602225259780_2tmp"/>
+    <property name="sun.java.command" value="/Users/arsharora/Documents/Playwright-Automation/target/surefire/surefirebooter-20260602233925438_3.jar /Users/arsharora/Documents/Playwright-Automation/target/surefire 2026-06-02T23-39-25_340-jvmRun1 surefire-20260602233925438_1tmp surefire_0-20260602233925438_2tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/arsharora/Documents/Playwright-Automation/target/test-classes:/Users/arsharora/Documents/Playwright-Automation/target/classes:/Users/arsharora/.m2/repository/com/microsoft/playwright/playwright/1.59.0/playwright-1.59.0.jar:/Users/arsharora/.m2/repository/com/google/code/gson/gson/2.13.2/gson-2.13.2.jar:/Users/arsharora/.m2/repository/com/google/errorprone/error_prone_annotations/2.41.0/error_prone_annotations-2.41.0.jar:/Users/arsharora/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/arsharora/.m2/repository/com/microsoft/playwright/driver/1.59.0/driver-1.59.0.jar:/Users/arsharora/.m2/repository/com/microsoft/playwright/driver-bundle/1.59.0/driver-bundle-1.59.0.jar:/Users/arsharora/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.2/junit-jupiter-5.10.2.jar:/Users/arsharora/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar:/Users/arsharora/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar:/Users/arsharora/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/arsharora/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.2/junit-jupiter-params-5.10.2.jar:/Users/arsharora/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar:/Users/arsharora/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar:"/>
@@ -30,7 +30,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/Users/arsharora/Documents/Playwright-Automation/target/surefire/surefirebooter-20260602225259780_3.jar"/>
+    <property name="surefire.real.class.path" value="/Users/arsharora/Documents/Playwright-Automation/target/surefire/surefirebooter-20260602233925438_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="21.0.6+7-LTS"/>
@@ -59,46 +59,6 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="createPostWithPhotos" classname="orangehrm.tests.OrangeHrmTest" time="38.435">
-    <error message="Error {&#10;  message=&apos;Timeout 30000ms exceeded.&#10;  name=&apos;TimeoutError&#10;  stack=&apos;TimeoutError: Timeout 30000ms exceeded.&#10;    at ProgressController.run (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/progress.js:92:28)&#10;    at FrameDispatcher._runCommand (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/dispatchers/dispatcher.js:91:31)&#10;    at DispatcherConnection.dispatch (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/dispatchers/dispatcher.js:325:39)&#10;}&#10;Call log:&#10;-   - waiting for locator(&quot;//div[@role=&apos;document&apos;]//form[@class=&apos;oxd-form&apos;]//textarea&quot;)&#10;" type="com.microsoft.playwright.TimeoutError"><![CDATA[com.microsoft.playwright.TimeoutError: 
-Error {
-  message='Timeout 30000ms exceeded.
-  name='TimeoutError
-  stack='TimeoutError: Timeout 30000ms exceeded.
-    at ProgressController.run (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/progress.js:92:28)
-    at FrameDispatcher._runCommand (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/dispatchers/dispatcher.js:91:31)
-    at DispatcherConnection.dispatch (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/dispatchers/dispatcher.js:325:39)
-}
-Call log:
--   - waiting for locator("//div[@role='document']//form[@class='oxd-form']//textarea")
-
-	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:52)
-	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:138)
-	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:131)
-	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:124)
-	at com.microsoft.playwright.impl.FrameImpl.fill(FrameImpl.java:310)
-	at com.microsoft.playwright.impl.LocatorImpl.fill(LocatorImpl.java:273)
-	at com.microsoft.playwright.Locator.fill(Locator.java:3200)
-	at orangehrm.pages.BuzzPage.createPostWithPhotos(BuzzPage.java:36)
-	at orangehrm.tests.OrangeHrmTest.createPostWithPhotos(OrangeHrmTest.java:37)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-Caused by: com.microsoft.playwright.TimeoutError: Error {
-  message='Timeout 30000ms exceeded.
-  name='TimeoutError
-  stack='TimeoutError: Timeout 30000ms exceeded.
-    at ProgressController.run (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/progress.js:92:28)
-    at FrameDispatcher._runCommand (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/dispatchers/dispatcher.js:91:31)
-    at DispatcherConnection.dispatch (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/dispatchers/dispatcher.js:325:39)
-}
-Call log:
--   - waiting for locator("//div[@role='document']//form[@class='oxd-form']//textarea")
-
-	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:257)
-	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:214)
-	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:136)
-	... 10 more
-]]></error>
-  </testcase>
+  <testcase name="commentNthPost" classname="orangehrm.tests.OrangeHrmTest" time="10.302"/>
+  <testcase name="likeFirstPost" classname="orangehrm.tests.OrangeHrmTest" time="9.004"/>
 </testsuite>

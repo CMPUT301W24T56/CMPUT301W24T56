@@ -26,16 +26,31 @@ public class OrangeHrmTest extends BaseTestClass {
         sideBarPage.clickOnSideBarOption("Buzz");
         BuzzPage buzzPage  = new BuzzPage(page);
         buzzPage.createBasicPostThroughHeader("this is a basic test page");
-        takeScreenshot("BuzzPostCreated.png");
     }
 
     @Test
     void createPostWithPhotos() { 
-        SideBarPage sideBarPage = new SideBarPage(page);
+      SideBarPage sideBarPage = new SideBarPage(page);
         sideBarPage.clickOnSideBarOption("Buzz");
         BuzzPage buzzPage  = new BuzzPage(page);
         buzzPage.createPostWithPhotos("this is test buzz with picture");
         takeScreenshot("photouploadedproof.png");
+    }
+
+    @Test
+    void likeFirstPost() { 
+        SideBarPage sideBarPage = new SideBarPage(page);
+        sideBarPage.clickOnSideBarOption("Buzz");
+        BuzzPage buzzPage  = new BuzzPage(page);
+        buzzPage.likeNthPost(1);
+    }
+
+    @Test 
+    void commentNthPost() { 
+        SideBarPage sideBarPage = new SideBarPage(page);
+        sideBarPage.clickOnSideBarOption("Buzz");
+        BuzzPage buzzPage  = new BuzzPage(page);
+        buzzPage.commentNthPost(1,"this is a test comment for post");
     }
 
 }

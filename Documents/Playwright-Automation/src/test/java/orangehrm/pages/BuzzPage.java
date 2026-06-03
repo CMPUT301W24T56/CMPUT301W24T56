@@ -17,7 +17,11 @@ public class BuzzPage {
     private String sharePhotosUploadImageField = "input.oxd-file-input";
     private String sharePhotosWithPhotosCreateBuzzButton = "//div[@role='document']//form[@class='oxd-form']//button[contains(text(),' Share ')]";
     private String addPhotos = "button:has-text(' Add Photos ')";
-
+    private String post = ".oxd-grid-item.oxd-grid-item--gutters";
+    private String footerActionsPost = ".orangehrm-buzz-post-actions";
+    private String likeHeartSVGId = "svg#heart-svg";
+    private String commentIcon = "i.bi-chat-text-fill";
+    private String commentTextArea = "xpath=//input[@placeholder='Write your comment...']";
     public BuzzPage(Page page) { 
         this.page = page; 
     }
@@ -30,15 +34,39 @@ public class BuzzPage {
     public void createPostWithPhotos(String context) { 
         page.locator(sharePhotosButtonHeader).click();
         
-        page.locator(sharePhotosUploadImageField).setInputFiles(
-            Paths.get("/Users/arsharora/Documents/Playwright-Automation/Playwright-Screenshot.png")
-        );
-        page.locator(textbuzzpostViaShareaPhotos).fill(context);
+        // page.locator(sharePhotosUploadImageField).setInputFiles(
+        //     Paths.get("/Users/arsharora/Documents/Playwright-Automation/Playwright-Screenshot.png")
+        // );
         // page.locator(addPhotos).click();
         // page.locator(sharePhotosUploadImageField).setInputFiles(
         //     Paths.get("/Users/arsharora/Documents/Playwright-Automation/PostCreated-ScreenShot.png")
         // );
-        // page.locator(sharePhotosWithPhotosCreateBuzzButton).click();        
+        page.locator(sharePhotosWithPhotosCreateBuzzButton).click();        
     }
 
+    public void likeNthPost(int postNumber) { 
+        Locator nthPost = page.locator(post).nth(postNumber);
+        Locator likeButton = nthPost
+        .locator(footerActionsPost)
+        .locator(likeHeartSVGId)
+        .first();
+        likeButton.click();
+    }
+
+    public void commentNthPost(int postNumber,String commentText) { 
+        Locator nthPost = page.locator(post).nth(postNumber);
+        
+        Locator comment = nthPost
+        .locator(footerActionsPost)
+        .locator(commentIcon)
+        .first();
+
+        comment.click();
+
+        // enter text in text area and hit enter 
+        Locator commenttextArea = page.locator(commentTextArea);
+        commenttextArea.fill(commentText);
+        commenttextArea.press("Enter");
+    }
 }
+
