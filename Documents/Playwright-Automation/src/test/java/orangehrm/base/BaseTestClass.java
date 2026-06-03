@@ -8,6 +8,8 @@ import com.microsoft.playwright.Playwright;
 
 import orangehrm.pages.LoginPage;
 
+import java.nio.file.Paths;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -53,4 +55,12 @@ public class BaseTestClass {
         browser.close();
         playwright.close();
     }
+
+    public void takeScreenshot(String screenshotName) { 
+        page.screenshot(new Page.ScreenshotOptions()
+            .setPath(Paths.get("%s",screenshotName))
+            .setFullPage(true)
+        );
+    }
 }
+

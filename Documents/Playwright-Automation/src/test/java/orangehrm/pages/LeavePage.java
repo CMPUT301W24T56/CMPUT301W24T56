@@ -43,7 +43,7 @@ public class LeavePage {
         page.locator(inputDateField).first().fill(fromDate);
         Locator locatorToDate =  page.locator(inputDateField).nth(1);
         locatorToDate.press("Meta+A");
-        locatorToDate.press("Backspace");
+        locatorToDate.press("Backspace"); // we can also use press function to send commands of system like ctr; A and backspace 
         page.locator(inputDateField).nth(1).fill(toDate);  
     }
     

@@ -1,4 +1,45 @@
 -------------------------------------------------------------------------------
 Test set: orangehrm.tests.OrangeHrmTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 25.28 s -- in orangehrm.tests.OrangeHrmTest
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 41.28 s <<< FAILURE! -- in orangehrm.tests.OrangeHrmTest
+orangehrm.tests.OrangeHrmTest.createPostWithPhotos -- Time elapsed: 38.44 s <<< ERROR!
+com.microsoft.playwright.TimeoutError: 
+Error {
+  message='Timeout 30000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 30000ms exceeded.
+    at ProgressController.run (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/progress.js:92:28)
+    at FrameDispatcher._runCommand (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/dispatchers/dispatcher.js:91:31)
+    at DispatcherConnection.dispatch (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/dispatchers/dispatcher.js:325:39)
+}
+Call log:
+-   - waiting for locator("//div[@role='document']//form[@class='oxd-form']//textarea")
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:52)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:138)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:131)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:124)
+	at com.microsoft.playwright.impl.FrameImpl.fill(FrameImpl.java:310)
+	at com.microsoft.playwright.impl.LocatorImpl.fill(LocatorImpl.java:273)
+	at com.microsoft.playwright.Locator.fill(Locator.java:3200)
+	at orangehrm.pages.BuzzPage.createPostWithPhotos(BuzzPage.java:36)
+	at orangehrm.tests.OrangeHrmTest.createPostWithPhotos(OrangeHrmTest.java:37)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: com.microsoft.playwright.TimeoutError: Error {
+  message='Timeout 30000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 30000ms exceeded.
+    at ProgressController.run (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/progress.js:92:28)
+    at FrameDispatcher._runCommand (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/dispatchers/dispatcher.js:91:31)
+    at DispatcherConnection.dispatch (/private/var/folders/h7/pv7_0v6n0pndqlpl2wqjf6j00000gn/T/playwright-java-2777877244181253995/package/lib/server/dispatchers/dispatcher.js:325:39)
+}
+Call log:
+-   - waiting for locator("//div[@role='document']//form[@class='oxd-form']//textarea")
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:257)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:214)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:136)
+	... 10 more
+
