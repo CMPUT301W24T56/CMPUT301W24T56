@@ -22,6 +22,13 @@ public class BuzzPage {
     private String likeHeartSVGId = "svg#heart-svg";
     private String commentIcon = "i.bi-chat-text-fill";
     private String commentTextArea = "xpath=//input[@placeholder='Write your comment...']";
+    private String threeDotsButton = "xpath=//div[@class='orangehrm-buzz-post-header-config']//button";
+    private String threeDotButtonDropDownMenuEditPost = "//ul[contains(@class,'oxd-dropdown-menu')]//p[normalize-space()='Edit Post']";
+    private String threeDotButtonDropDownMenuDeletePost = "//ul[contains(@class,'oxd-dropdown-menu')]//p[normalize-space()='Delete Post']";
+    private String editPosttextArea = "div.orangehrm-buzz-post-modal-header-text textarea";
+    private String editPostSubmitButton = "div.orangehrm-buzz-post-modal-actions button";
+    private String deletePostYesOptionAlert = "button:has-text('Yes, Delete')";
+    
     public BuzzPage(Page page) { 
         this.page = page; 
     }
@@ -67,6 +74,15 @@ public class BuzzPage {
         Locator commenttextArea = page.locator(commentTextArea);
         commenttextArea.fill(commentText);
         commenttextArea.press("Enter");
+    }
+
+    public void deleteNthPost(int postNumber) { 
+        page.locator(threeDotsButton).nth(postNumber).click();
+        page.locator(threeDotButtonDropDownMenuDeletePost).click();
+        // delete the post 
+        Locator confirmDeleteButton = page.locator(deletePostYesOptionAlert);
+        confirmDeleteButton.waitFor();
+        confirmDeleteButton.click();
     }
 }
 

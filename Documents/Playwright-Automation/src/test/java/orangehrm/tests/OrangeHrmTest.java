@@ -53,4 +53,12 @@ public class OrangeHrmTest extends BaseTestClass {
         buzzPage.commentNthPost(1,"this is a test comment for post");
     }
 
+    @Test
+    void deletePost() { 
+        SideBarPage sideBarPage = new SideBarPage(page);
+        sideBarPage.clickOnSideBarOption("Buzz");
+        BuzzPage buzzPage  = new BuzzPage(page);
+        buzzPage.deleteNthPost(1);
+    }
+
 }
