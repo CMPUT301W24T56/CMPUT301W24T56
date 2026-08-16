@@ -1,0 +1,18 @@
+{
+    "sku": "it12364",
+    "itemName": "Pen",
+    "warehouseId": "wh_edm_01",
+    "zone": "A",                          // warehouse zone, feeds bin location logic downstream
+    "onHand": 480,
+    "reserved": 65,
+    "availableToPromise": 415,             // onHand - reserved, this is what OMS actually checks
+    "reorderPoint": 100,
+    "reorderQuantity": 500,
+    "backorderAllowed": true,
+    "backorderLeadTimeDays": 5,
+    "lotTracked": false,                   // true for items needing lot/serial traceability
+    "serialTracked": false,
+    "unitCost": 0.42,
+    "lastCycleCountAt": "2026-08-01T06:00:00Z",
+    "updatedAt": "2026-08-13T09:15:04Z"
+}

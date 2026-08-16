@@ -1,0 +1,28 @@
+{
+    "id": "https://qos.orderflow.dev/api/customers/AC12453",
+    "customerType": "BUSINESS",              // INDIVIDUAL, BUSINESS
+    "accountNumber": "AC12453",
+    "name": "Arsh Arora",
+    "email": "arsharora0388@gmail.com",
+    "contact": "+1-587-778-4938",
+    "pricingTier": "GOLD",                   // STANDARD, SILVER, GOLD — drives quote discount defaults
+    "address": { "$ref": "Address" },
+    "business": {                             // present only when customerType = BUSINESS
+      "pointOfContactName": "Point of Contact Name",
+      "pointOfContactEmail": "pointofcontact@gmail.com",
+      "projects": [
+        {
+          "projectNumber": "PRJ-123445",
+          "projectName": "New Business Project",
+          "description": "This is a new project description",
+          "createdBy": "SalesRep-123456",
+          "createdAt": "2026-08-11T09:15:00Z",
+          "orderTotal": 1000.00,
+          "quoteIds": ["QT-100122"],
+          "orderIds": ["ORD-12345", "ORD-234567"]
+        }
+      ]
+    },
+    "createdAt": "2026-01-15T10:00:00Z",
+    "updatedAt": "2026-08-11T09:00:00Z"
+  }

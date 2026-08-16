@@ -1,0 +1,16 @@
+{
+    "id": "d4f7b0c3-...",
+    "orderId": "https://qos.orderflow.dev/api/orders/9a7c1e30",
+    "sku": "it12364",
+    "warehouseId": "wh_edm_01",
+    "attemptNumber": 1,
+    "quantityRequested": 5,
+    "quantityAvailableAtCheck": 415,
+    "quantityAllocated": 5,
+    "outcome": "ALLOCATED",              // ALLOCATED, PARTIAL_BACKORDER, REJECTED, RETRY_QUEUED
+    "lockAcquiredAt": "2026-08-13T09:15:04.910Z",
+    "lockReleasedAt": "2026-08-13T09:15:04.913Z",
+    "lockWaitMs": 2,
+    "threadId": "pool-4-thread-2",
+    "occurredAt": "2026-08-13T09:15:04.913Z"
+  }

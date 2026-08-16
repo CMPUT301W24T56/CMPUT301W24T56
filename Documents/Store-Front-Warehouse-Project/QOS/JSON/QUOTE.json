@@ -1,0 +1,39 @@
+{
+    "id": "https://qos.orderflow.dev/api/quotes/3b1f2a90",
+    "quoteNumber": "QT-100122",
+    "customerId": "https://qos.orderflow.dev/api/customers/AC12453",
+    "projectId": "PRJ-123445",                // optional, business customers only
+    "salesRepNumber": "SalesRep-123456",
+    "status": "LOST",                          // OPEN, WON, LOST, EXPIRED, CONVERTED
+    "createdAt": "2026-08-01T09:00:00Z",
+    "expiresAt": "2026-08-20T00:00:00Z",
+    "updatedAt": "2026-08-13T14:00:00Z",
+  
+    "lines": [
+      {
+        "lineNumber": 1,
+        "sku": "it12364",
+        "itemName": "Pen",
+        "quantity": 5,
+        "listPrice": 2.20,
+        "discountPercent": 12,                 // pulled from customer's pricing tier at quote time
+        "quotedUnitPrice": 1.99,
+        "lineTotal": 9.95
+      }
+    ],
+    "subtotal": 9.95,
+    "taxRate": 0.05,
+    "taxAmount": 0.50,
+    "quoteTotal": 10.45,
+  
+    // --- populated only when status = WON ---
+    "wonAt": null,
+    "convertedOrderId": null,                  // set once WON quote is converted to an order
+  
+    // --- populated only when status = LOST ---
+    "lostAt": "2026-08-13T14:00:00Z",
+    "lostReason": "PRICE_TOO_HIGH",            // enum — see below
+    "lostReasonDetail": "Customer said a competitor quoted 15% lower on bulk fasteners.",
+    "competitorName": "Acme Fastener Co.",     // optional, only if known
+    "lostFollowUpDate": "2026-11-01"           // optional — when to re-approach the customer
+  }

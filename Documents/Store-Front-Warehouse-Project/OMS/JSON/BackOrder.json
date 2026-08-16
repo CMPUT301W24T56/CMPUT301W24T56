@@ -1,0 +1,12 @@
+{
+    "id": "bo_00147",
+    "orderId": "https://qos.orderflow.dev/api/orders/9a7c1e30",
+    "sku": "it12364",
+    "warehouseId": "wh_edm_01",
+    "quantityBackordered": 3,
+    "status": "WAITING_ON_STOCK",         // WAITING_ON_STOCK, RETRY_SUCCEEDED, CANCELLED
+    "expectedRestockDate": "2026-08-18",
+    "retryCount": 0,
+    "createdAt": "2026-08-13T09:15:05Z",
+    "resolvedAt": null
+  }

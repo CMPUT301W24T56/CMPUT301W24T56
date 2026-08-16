@@ -1,0 +1,10 @@
+{
+    "id": "SC-12345",
+    "name": "Evergreen Traders",
+    "contact": "evergreentraders@gmail.com",
+    "costPerUnit": { "it8596": 0.58 },     // supplier's cost, keyed by SKU they supply
+    "address": { "unitNumber": "Apt 210", "streetAddress": "8515 112 St NW", "city": "Edmonton", "province": "Alberta", "country": "Canada", "postalCode": "T6G 1K7" },
+    "pointOfContact": { "name": "Name", "email": "suppliercontact@gmail.com", "phone": "236-880-3989" },
+    "avgLeadTimeDays": 4,
+    "active": true
+  }

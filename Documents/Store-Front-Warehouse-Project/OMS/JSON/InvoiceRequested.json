@@ -1,0 +1,12 @@
+{
+    "eventType": "InvoiceRequested",
+    "eventId": "b2d5f8a1-...",
+    "orderId": "https://qos.orderflow.dev/api/orders/9a7c1e30",
+    "orderNumber": "ORD-123456789",
+    "sourceType": "DROP_SHIP",
+    "supplierId": "SC-12345",
+    "lines": [
+      { "sku": "it8596", "itemName": "Paper", "quantity": 5, "unitPrice": 1.99 }
+    ],
+    "publishedAt": "2026-08-13T09:15:05Z"
+  }

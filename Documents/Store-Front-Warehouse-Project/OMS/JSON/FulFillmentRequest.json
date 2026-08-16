@@ -1,0 +1,13 @@
+{
+    "eventType": "FulfillmentRequested",
+    "eventId": "a1c4e7f0-...",
+    "orderId": "https://qos.orderflow.dev/api/orders/9a7c1e30",
+    "orderNumber": "ORD-123456789",
+    "warehouseId": "wh_edm_01",
+    "shippingAddress": { "$ref": "Address" },   // copied forward so FMS doesn't need to call back to QOS
+    "deliveryPreference": "ONE_DAY",
+    "lines": [
+      { "sku": "it12364", "itemName": "Pen", "quantityAllocated": 5, "fulfillmentType": "STK" }
+    ],
+    "publishedAt": "2026-08-13T09:15:05Z"
+  }

@@ -1,0 +1,41 @@
+{
+    "id": "https://oms.orderflow.dev/api/allocations/al_9a7c1e30",
+    "orderId": "https://qos.orderflow.dev/api/orders/9a7c1e30",
+    "orderNumber": "ORD-123456789",
+    "consumedEventId": "e7b1c9a0-...",     // OrderCreated eventId — checked for idempotency before processing
+    "status": "PARTIALLY_BACKORDERED",     // ALLOCATED, PARTIALLY_BACKORDERED, REJECTED
+    "warehousesInvolved": ["wh_edm_01"],
+  
+    "lines": [
+      {
+        "lineNumber": 1,
+        "sku": "it12364",
+        "warehouseId": "wh_edm_01",
+        "quantityRequested": 5,
+        "quantityAllocated": 5,
+        "quantityBackordered": 0,
+        "fulfillmentType": "STK",
+        "allocationStatus": "ALLOCATED",   // ALLOCATED, PARTIAL_BACKORDER, REJECTED, DROP_SHIP_ROUTED
+        "supplierId": null,
+        "lockWaitMs": 2,
+        "processedByThread": "pool-4-thread-2"
+      },
+      {
+        "lineNumber": 2,
+        "sku": "it8596",
+        "warehouseId": null,
+        "quantityRequested": 5,
+        "quantityAllocated": 0,
+        "quantityBackordered": 0,
+        "fulfillmentType": "DS",
+        "allocationStatus": "DROP_SHIP_ROUTED",   // never touches inventory — routed straight to Finance
+        "supplierId": "SC-12345",
+        "lockWaitMs": null,
+        "processedByThread": "pool-4-thread-3"
+      }
+    ],
+  
+    "rejectionReason": null,
+    "allocatedAt": "2026-08-13T09:15:05Z",
+    "batchProcessingMs": 47                // total wall-clock time to allocate all lines concurrently
+  }

@@ -1,0 +1,11 @@
+{
+    "eventType": "OrderPartiallyBackordered",
+    "eventId": "c3e6a9b2-...",
+    "orderId": "https://qos.orderflow.dev/api/orders/9a7c1e30",
+    "lineOutcomes": [
+      { "sku": "it12364", "status": "ALLOCATED", "quantityAllocated": 5, "quantityBackordered": 0 },
+      { "sku": "it8596", "status": "DROP_SHIP_ROUTED", "quantityAllocated": 0, "quantityBackordered": 0 }
+    ],
+    "reason": null,
+    "occurredAt": "2026-08-13T09:15:05Z"
+  }
